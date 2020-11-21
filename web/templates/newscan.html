@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Simple Sidebar - Start Bootstrap Template</title>
+  <title>OSINT</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,10 +24,10 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="sidebar-heading">OSINT</div>
       <div class="list-group list-group-flush">
         <a href="newscan.html" class="list-group-item list-group-item-action bg-light">New Scan</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">History</a>
+        <a href="history.html" class="list-group-item list-group-item-action bg-light">History</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
@@ -49,7 +49,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="history.html">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
@@ -68,11 +68,62 @@
           </ul>
         </div>
       </nav>
-
-      <div class="container-fluid">
-        <h1 class="mt-4">Simple Sidebar</h1>
-        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+      <div class="container">
+        <h1 class="mt-4">Start a New Scan!</h1>
+        <form class="form" action="/start" method="POST">
+          <br>
+          <label for="name">Name:</label>
+          <input id="name" name="name" type="text" placeholder="Name of your new scan">
+          <br>
+          <br>
+          <label for="target">Target:</label>
+          <input id="target" name="target" type="text" placeholder="IP/ Domain Name">
+          <br>
+          <br>
+          <button type="button" id="deselect" name="deselect" class="btn btn-dark" style="float: right;">De-select</button>
+          <br>
+          <table id="modules" class="table">  
+              <th>Select</th>
+              <th>Name</th>
+              <th>Description</th>
+              <tr>
+                <td >
+                <input id="port-scan" type="checkbox" checked>
+                </td>
+                <td>Port Scan</td>
+                <td>Scan the target for open ports</td>
+              </tr>
+              <tr>
+                <td >
+                <input id="sub-domain" type="checkbox" checked>
+                </td>
+                <td>Sub-Domains</td>
+                <td>Scan the target for sub-domains</td>
+              </tr>
+              <tr>
+                <td >
+                <input id="ssl" type="checkbox" checked>
+                </td>
+                <td>SSL Information</td>
+                <td>Collect information about the ssl certificate used by target</td>
+              </tr>
+              <tr>
+                <td >
+                <input id="public-ip" type="checkbox" checked>
+                </td>
+                <td>Public IP</td>
+                <td>Collect public IPs assigned to the target</td>
+              </tr>
+              <tr>
+                <td >
+                <input id="email" type="checkbox" checked>
+                </td>
+                <td>Email</td>
+                <td>Collect email addresses associated with the target</td>
+              </tr>
+          </table>
+          <button type="submit" class="btn btn-primary">Start</button>
+        </form>  
       </div>
     </div>
     <!-- /#page-content-wrapper -->
