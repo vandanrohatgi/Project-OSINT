@@ -70,6 +70,10 @@
       </nav>
       <div class="container">
         <h1 class="mt-4">Start a New Scan!</h1>
+        <div style="float: right;">
+          <span style="padding-right: 10px;"><b>Select All</b></span>
+        <input type="checkbox" id="select" name="select" style="float: right;" onclick="selectAll(this)" checked>
+        </div>
         <form class="form" action="/start" method="POST">
           <br>
           <label for="name">Name:</label>
@@ -80,49 +84,47 @@
           <input id="target" name="target" type="text" placeholder="IP/ Domain Name">
           <br>
           <br>
-          <button type="button" id="deselect" name="deselect" class="btn btn-dark" style="float: right;">De-select</button>
-          <br>
           <table id="modules" class="table">  
               <th>Select</th>
               <th>Name</th>
               <th>Description</th>
               <tr>
                 <td >
-                <input id="port-scan" type="checkbox" checked>
+                <input name="port-scan-module" type="checkbox" checked>
                 </td>
                 <td>Port Scan</td>
                 <td>Scan the target for open ports</td>
               </tr>
               <tr>
                 <td >
-                <input id="sub-domain" type="checkbox" checked>
+                <input name="sub-domain-module"  type="checkbox" checked>
                 </td>
                 <td>Sub-Domains</td>
                 <td>Scan the target for sub-domains</td>
               </tr>
               <tr>
                 <td >
-                <input id="ssl" type="checkbox" checked>
+                <input name="ssl-module"  type="checkbox" checked>
                 </td>
                 <td>SSL Information</td>
                 <td>Collect information about the ssl certificate used by target</td>
               </tr>
               <tr>
                 <td >
-                <input id="public-ip" type="checkbox" checked>
+                <input name="public-ip-module"  type="checkbox" checked>
                 </td>
                 <td>Public IP</td>
                 <td>Collect public IPs assigned to the target</td>
               </tr>
               <tr>
                 <td >
-                <input id="email" type="checkbox" checked>
+                <input name="email-module" type="checkbox" checked>
                 </td>
                 <td>Email</td>
                 <td>Collect email addresses associated with the target</td>
               </tr>
           </table>
-          <button type="submit" class="btn btn-primary">Start</button>
+          <button type="submit" class="btn btn-primary" onclick="return emptyCheck()">Start</button>
         </form>  
       </div>
     </div>
@@ -142,6 +144,7 @@
       $("#wrapper").toggleClass("toggled");
     });
   </script>
+  <script src="js/newscan.js"></script>
 
 </body>
 
