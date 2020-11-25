@@ -1,24 +1,27 @@
 import uuid
-from modules import sslModule,portScanModule
 import sqlite3
 
 modules=['portScanModule','sslModule','emailModule','publicIpModule','subDomainModule']
 #loadedModules={}
-toImport=[]
-objects=[]
 
 def new(form):
+    toImport=[]
+    objects=[]
+    params=form.split('&')
+    name=params[0][5:]
+    target=params[1][7:]
     newID=str(uuid.uuid4())[:8]
-    name=form.get('name')
-    target=form.get('target')
+    '''name=form.get('name')
+    target=form.get('target')'''
     for i in modules:
-        #loadedModules[i]=form.get(i)
+        if i in form:
+            toImport.append(i)
+    '''    loadedModules[i]=form.get(i)
         if form.get(i)!=None:
             toImport.append(i)
-    '''for i in loadedModules.keys():
+    for i in loadedModules.keys():
         if loadedModules[i]=='on':
             toImport.append(i)'''
-    print(toImport)
     connection=sqlite3.connect("/home/vandan/osint/osint.db")
     for i in toImport:
         obj=__import__('modules.'+i,globals(),locals(),[i])
@@ -26,4 +29,5 @@ def new(form):
     
     for i in objects:
         i.start()
+    return("Scan Complete")
 

@@ -28,7 +28,9 @@ class sslModule:
         self.connection.commit()
 
 
-
+'''con=sqlite3.connect("/home/vandan/osint/osint.db")
+obj=sslModule('123','test','grocio.in',con)
+obj.start()'''
 
 
 '''ctx = ssl.create_default_context()

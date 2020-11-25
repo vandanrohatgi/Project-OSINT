@@ -74,7 +74,7 @@
           <span style="padding-right: 10px;"><b>Select All</b></span>
         <input type="checkbox" id="select" name="select" style="float: right;" onclick="selectAll(this)" checked>
         </div>
-        <form class="form" action="/start" method="POST">
+        <form class="form" action="#" method="POST" id="newScanForm" onsubmit="oneForAll()">
           <br>
           <label for="name">Name:</label>
           <input id="name" name="name" type="text" placeholder="Name of your new scan">
@@ -124,12 +124,16 @@
                 <td>Collect email addresses associated with the target</td>
               </tr>
           </table>
-          <button type="submit" class="btn btn-primary" onclick="return emptyCheck()">Start</button>
+          <button type="submit" class="btn btn-primary" id="submit-button" >Start</button>
         </form>  
       </div>
     </div>
     <!-- /#page-content-wrapper -->
 
+  </div>
+  <div class="container" id="scanning" style="display: none;margin-top: 100px;">
+    <h2 id="status">Running Scans...</h2>
+    <img src="https://media.giphy.com/media/sSgvbe1m3n93G/source.gif" id="loading">
   </div>
   <!-- /#wrapper -->
 
