@@ -3,19 +3,31 @@ import ssl
 from cryptography import x509
 from cryptography.hazmat.backends.openssl import backend
 from OpenSSL import crypto
+import pickle
+import sqlite3
 
-def getSSL(target):
-    ip=socket.gethostbyname(target)
-    certpem=ssl.get_server_certificate((ip,443))
-    encodedCert=bytes(certpem,'utf-8')
-    
-    cert = x509.load_pem_x509_certificate(encodedCert, backend)
+class sslModule:
+    def __init__(self,uuid,name,target,connection):
+        self.uuid=uuid
+        self.name=name
+        self.target=target
+        self.connection=connection
+        self.ip=socket.gethostbyname(self.target)
 
-    certload=crypto.load_certificate(crypto.FILETYPE_PEM, encodedCert)
-    rawData=crypto.dump_certificate(crypto.FILETYPE_TEXT,certload)
+    def start(self):
+        certpem=ssl.get_server_certificate((self.ip,443))
+        encodedCert=bytes(certpem,'utf-8')
+        cert = x509.load_pem_x509_certificate(encodedCert, backend)
+        certload=crypto.load_certificate(crypto.FILETYPE_PEM, encodedCert)
+        rawData=crypto.dump_certificate(crypto.FILETYPE_TEXT,certload)
+        output={'Issuer':cert.issuer,"Issued To":cert.subject,"Validity":str(cert.not_valid_before)+" to "+str(cert.not_valid_after),"Raw Data":rawData.decode('utf-8')}
 
-    output={'Issuer':cert.issuer,"Issued To":cert.subject,"Validity":str(cert.not_valid_before)+" to "+str(cert.not_valid_after),"Raw Data":rawData.decode('utf-8')}
-    return(output)
+        byteData=pickle.dumps(output)
+        cursor=self.connection.cursor()
+        cursor.execute("INSERT INTO output VALUES (?,?,?,'sslModule',?)",(self.uuid,self.name,self.target,byteData))
+        self.connection.commit()
+
+
 
 
 
