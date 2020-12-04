@@ -71,7 +71,23 @@
 
       <div class="container-fluid">
         <h1 class="mt-4">Previous Scans</h1>
-        </div>
+      </div>
+      <br>
+      <br>
+      <table class="table">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Target</th>
+        <th>Time</th>
+        {% for row in rows %}
+          <tr>
+            <td><a href="/getInfo?id={{row["ID"]}}">{{row["ID"]}}</a></td>
+            <td>{{row["Name"]}}</td>
+            <td>{{row["Target"]}}</td>
+            <td>{{row["Time"]}}</td>
+          </tr>
+        {% endfor %}
+      </table>
     </div>
     <!-- /#page-content-wrapper -->
 

@@ -7,11 +7,12 @@ import pickle
 import sqlite3
 
 class sslModule:
-    def __init__(self,uuid,name,target,connection):
+    def __init__(self,uuid,name,target,timestamp,connection):
         self.uuid=uuid
         self.name=name
         self.target=target
         self.connection=connection
+        self.timestamp=timestamp
         self.ip=socket.gethostbyname(self.target)
 
     def start(self):
@@ -20,11 +21,11 @@ class sslModule:
         cert = x509.load_pem_x509_certificate(encodedCert, backend)
         certload=crypto.load_certificate(crypto.FILETYPE_PEM, encodedCert)
         rawData=crypto.dump_certificate(crypto.FILETYPE_TEXT,certload)
-        output={'Issuer':cert.issuer,"Issued To":cert.subject,"Validity":str(cert.not_valid_before)+" to "+str(cert.not_valid_after),"Raw Data":rawData.decode('utf-8')}
+        output={'Issuer':str(cert.issuer)[1:-1],"Issued To":str(cert.subject)[1:-1],"Validity":str(cert.not_valid_before)+" to "+str(cert.not_valid_after),"Raw Data":str(rawData.decode('utf-8'))}
 
         byteData=pickle.dumps(output)
         cursor=self.connection.cursor()
-        cursor.execute("INSERT INTO output VALUES (?,?,?,'sslModule',?)",(self.uuid,self.name,self.target,byteData))
+        cursor.execute("INSERT INTO output VALUES (?,?,?,?,'sslModule',?)",(self.uuid,self.name,self.target,self.timestamp,byteData))
         self.connection.commit()
 
 

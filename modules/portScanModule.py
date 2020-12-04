@@ -2,14 +2,15 @@ import socket
 import threading
 import sqlite3
 import pickle
-
+from scapy.all import IP,ICMP,TCP,sr1
 
 class portScanModule:
-    def __init__(self,uuid,name,target,connection):
+    def __init__(self,uuid,name,target,timestamp,connection):
         self.name=name
         self.target=target
         self.uuid=uuid
         self.connection=connection
+        self.timestamp=timestamp
         self.commonPorts=['21', '22', '23', '25', '53', '79', '80', '81', '88', '110', '111','113', '119', '123',
              '137', '138', '139', '143', '161', '179','389', '443', 
             '445', '465', '512', '513', '514', '515', '3306',
@@ -20,16 +21,22 @@ class portScanModule:
         self.threads=[]
 
     def scan(self,port):
-        try:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(10)
-            sock.connect((self.ip,int(port)))   
-            sock.close()
+        '''pkt=IP(dst=self.target)/TCP(dport=port,flags='S')
+        ans=sr1(pkt,timeout=5,verbose=False)
+        if ans!=None and ans[TCP].flags=='SA':
             self.lock.acquire()
             self.ports.update({str(self.ip)+':'+port:'open'})
-            self.lock.release()
+            self.lock.release()'''
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            #sock.settimeout(10)
+            sock.connect((self.ip,int(port)))   
+            sock.close()
+            with self.lock:
+                self.ports.update({str(self.ip)+':'+port:'open'})
         except socket.error:
             pass
+        
 
     def start(self):
         try:
@@ -37,7 +44,7 @@ class portScanModule:
         except:
             print("cannot resolve domain")
             cursor=self.connection.cursor()
-            cursor.execute("INSERT INTO output VALUES (?,?,?,'PortScanModule',?)",(self.uuid,self.name,self.target,''))
+            cursor.execute("INSERT INTO output VALUES (?,?,?,?,'PortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,''))
             self.connection.commit()
             return
             
@@ -49,7 +56,7 @@ class portScanModule:
 
         byteData=pickle.dumps(self.ports)
         cursor=self.connection.cursor()
-        cursor.execute("INSERT INTO output VALUES (?,?,?,'PortScanModule',?)",(self.uuid,self.name,self.target,byteData))
+        cursor.execute("INSERT INTO output VALUES (?,?,?,?,'PortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,byteData))
         self.connection.commit()
 
 

@@ -1,7 +1,8 @@
 import uuid
 import sqlite3
+from datetime import datetime
 
-modules=['portScanModule','sslModule','emailModule','publicIpModule','subDomainModule']
+modules=['portScanModule','sslModule','emailModule','publicIpModule','subDomainModule','allPortScanModule']
 #loadedModules={}
 
 def new(form):
@@ -10,6 +11,7 @@ def new(form):
     params=form.split('&')
     name=params[0][5:]
     target=params[1][7:]
+    timestamp=str(datetime.now())
     newID=str(uuid.uuid4())[:8]
     '''name=form.get('name')
     target=form.get('target')'''
@@ -25,7 +27,7 @@ def new(form):
     connection=sqlite3.connect("/home/vandan/osint/osint.db")
     for i in toImport:
         obj=__import__('modules.'+i,globals(),locals(),[i])
-        objects.append(getattr(obj,i)(newID,name,target,connection))
+        objects.append(getattr(obj,i)(newID,name,target,timestamp,connection))
     
     for i in objects:
         i.start()
