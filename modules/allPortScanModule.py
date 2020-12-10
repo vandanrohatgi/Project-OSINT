@@ -3,6 +3,7 @@ import threading
 import sqlite3
 import pickle
 from queue import Queue
+from db import insert
 
 class allPortScanModule:
     def __init__(self,uuid,name,target,timestamp,connection):
@@ -52,9 +53,10 @@ class allPortScanModule:
         self.q.join()
 
         byteData=pickle.dumps(self.ports)
-        cursor=self.connection.cursor()
+        insert(self.uuid,self.name,self.target,self.timestamp,'allPortScanModule',byteData,self.connection)
+        '''cursor=self.connection.cursor()
         cursor.execute("INSERT INTO output VALUES (?,?,?,?,'allPortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,byteData))
-        self.connection.commit()
+        self.connection.commit()'''
 
 
 

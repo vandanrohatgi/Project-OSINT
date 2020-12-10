@@ -1,0 +1,17 @@
+import sqlite3
+import pickle
+from db import insert
+
+class moduletemplate:
+	def __init__(self,uuid,name,target,timestamp,connection):
+		self.uuid=uuid
+		self.name=name
+		self.target=target
+		self.connection=connection
+		self.timestamp=timestamp
+        self.collectedData={}
+	
+	def start(self):
+		#main code
+		byteData=pickle.dumps(self.collectedData)
+		insert(self.uuid,self.name,self.target,self.timestamp,'moduletemplate',byteData,self.connection)

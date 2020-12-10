@@ -2,7 +2,7 @@ import uuid
 import sqlite3
 from datetime import datetime
 
-modules=['portScanModule','sslModule','emailModule','publicIpModule','subDomainModule','allPortScanModule']
+modules=['portScanModule','sslModule','emailModule','subDomainModule','allPortScanModule','getPublicIPsModule']
 #loadedModules={}
 
 def new(form):

@@ -2,7 +2,7 @@ import socket
 import threading
 import sqlite3
 import pickle
-from scapy.all import IP,ICMP,TCP,sr1
+from db import insert
 
 class portScanModule:
     def __init__(self,uuid,name,target,timestamp,connection):
@@ -55,9 +55,10 @@ class portScanModule:
             self.threads[x].join()
 
         byteData=pickle.dumps(self.ports)
-        cursor=self.connection.cursor()
+        insert(self.uuid,self.name,self.target,self.timestamp,'PortScanModule',byteData,self.connection)
+        '''cursor=self.connection.cursor()
         cursor.execute("INSERT INTO output VALUES (?,?,?,?,'PortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,byteData))
-        self.connection.commit()
+        self.connection.commit()'''
 
 
 

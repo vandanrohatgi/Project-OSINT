@@ -5,6 +5,7 @@ from cryptography.hazmat.backends.openssl import backend
 from OpenSSL import crypto
 import pickle
 import sqlite3
+from db import insert
 
 class sslModule:
     def __init__(self,uuid,name,target,timestamp,connection):
@@ -24,9 +25,10 @@ class sslModule:
         output={'Issuer':str(cert.issuer)[1:-1],"Issued To":str(cert.subject)[1:-1],"Validity":str(cert.not_valid_before)+" to "+str(cert.not_valid_after),"Raw Data":str(rawData.decode('utf-8'))}
 
         byteData=pickle.dumps(output)
-        cursor=self.connection.cursor()
+        insert(self.uuid,self.name,self.target,self.timestamp,'sslModule',byteData,self.connection)
+        '''cursor=self.connection.cursor()
         cursor.execute("INSERT INTO output VALUES (?,?,?,?,'sslModule',?)",(self.uuid,self.name,self.target,self.timestamp,byteData))
-        self.connection.commit()
+        self.connection.commit()'''
 
 
 '''con=sqlite3.connect("/home/vandan/osint/osint.db")
