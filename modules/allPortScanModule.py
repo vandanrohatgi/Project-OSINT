@@ -1,6 +1,5 @@
 import socket
 import threading
-import sqlite3
 import pickle
 from queue import Queue
 from db import insert
@@ -15,6 +14,7 @@ class allPortScanModule:
         self.ports={}
         self.lock=threading.Lock()
         self.q=Queue()
+        self.collectedData={}
 
     def scan(self,port):
         try:
@@ -23,7 +23,8 @@ class allPortScanModule:
             sock.connect((self.ip,int(port)))   
             sock.close()
             with self.lock:
-                self.ports.update({str(self.ip)+':'+str(port):'open'})
+                self.collectedData[self.ip]=str(port)
+                #self.ports.update({str(self.ip)+':'+str(port):'open'})
         except socket.error:
             pass
     
@@ -38,9 +39,6 @@ class allPortScanModule:
             self.ip=socket.gethostbyname(self.target)
         except:
             print("cannot resolve domain")
-            cursor=self.connection.cursor()
-            cursor.execute("INSERT INTO output VALUES (?,?,?,?,'allPortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,''))
-            self.connection.commit()
             return
 
         for x in range(100):
@@ -54,9 +52,6 @@ class allPortScanModule:
 
         byteData=pickle.dumps(self.ports)
         insert(self.uuid,self.name,self.target,self.timestamp,'allPortScanModule',byteData,self.connection)
-        '''cursor=self.connection.cursor()
-        cursor.execute("INSERT INTO output VALUES (?,?,?,?,'allPortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,byteData))
-        self.connection.commit()'''
 
 
 

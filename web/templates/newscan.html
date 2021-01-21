@@ -111,7 +111,7 @@
               </tr>
               <tr>
                 <td >
-                <input name="getPublicIPsModule"  type="checkbox" checked>
+                <input name="PublicIPsModule"  type="checkbox" checked>
                 </td>
                 <td>Public IP</td>
                 <td>Collect public IPs assigned to the target</td>
@@ -129,6 +129,20 @@
                 </td>
                 <td>All Port Scan</td>
                 <td>Scan all the 65535 ports</td>
+              </tr>
+              <tr>
+                <td >
+                <input name="s3bucketModule" type="checkbox" checked>
+                </td>
+                <td>S3 Buckets</td>
+                <td>Search for open s3 buckets related to the domain</td>
+              </tr>
+              <tr>
+                <td >
+                <input name="gitHubModule" type="checkbox" checked>
+                </td>
+                <td>Scan Github</td>
+                <td>Search Github for secrets. (Enter just the keyword in target to perform keyword scan)</td>
               </tr>
           </table>
           <button type="submit" class="btn btn-primary" id="submit-button" >Start</button>

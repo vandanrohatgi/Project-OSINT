@@ -1,0 +1,20 @@
+{
+  "s3_url": "s3.amazonaws.com",
+  "permutations": [
+    "%s-0.%s",
+    "%s-001.%s",
+    "%s-002.%s",
+    "%s-003.%s",
+    "%s-004.%s",
+    "%s-005.%s",
+    "%s-01.%s",
+    "zm-%s.%s",
+    "zm.%s.%s",
+    "zulu%s.%s",
+    "zulu-%s.%s",
+    "zulu.%s.%s",
+    "zw%s.%s",
+    "zw-%s.%s",
+    "zw.%s.%s"
+  ]
+}

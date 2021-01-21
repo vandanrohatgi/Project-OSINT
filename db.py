@@ -3,12 +3,13 @@ import pickle
 import os
 
 def initialize():
-	if os.path.exists("./osint.db"):
-		pass
-	else:
+	if not os.path.exists("./osint.db"):
 		connection=sqlite3.connect("osint.db")
 		cursor=connection.cursor()
 		cursor.execute("CREATE TABLE output (ID varchar,Name varchar ,Target varchar,Time varchar,Module varchar, Data blob)")
+	
+	if not os.path.exists("./keys.json"):
+		keys={}
 
 def insert(uuid,name,target,timestamp,module,data,connection):
 	cursor=connection.cursor()

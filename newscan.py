@@ -1,9 +1,19 @@
 import uuid
 import sqlite3
 from datetime import datetime
+import re
 
-modules=['portScanModule','sslModule','emailModule','subDomainModule','allPortScanModule','getPublicIPsModule']
-#loadedModules={}
+modules=['portScanModule','sslModule','emailModule','subDomainModule','allPortScanModule','PublicIPsModule','s3bucketModule','gitHubModule']
+domain=['portScanModule','sslModule','emailModule','subDomainModule','allPortScanModule','PublicIPsModule','s3bucketModule']
+keyword=['gitHubModule']
+
+def isDomain(target):
+    regex = "^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)[A-Za-z]{2,6}"
+    p = re.compile(regex)
+    if(re.search(p, target)):
+        return True
+    else:
+        return False
 
 def new(form):
     toImport=[]
@@ -13,17 +23,12 @@ def new(form):
     target=params[1][7:]
     timestamp=str(datetime.now())
     newID=str(uuid.uuid4())[:8]
-    '''name=form.get('name')
-    target=form.get('target')'''
-    for i in modules:
-        if i in form:
-            toImport.append(i)
-    '''    loadedModules[i]=form.get(i)
-        if form.get(i)!=None:
-            toImport.append(i)
-    for i in loadedModules.keys():
-        if loadedModules[i]=='on':
-            toImport.append(i)'''
+    if isDomain(target):
+        for i in domain:
+            if i in form:
+                toImport.append(i)
+    else:
+        toImport=keyword
     connection=sqlite3.connect("/home/vandan/osint/osint.db")
     for i in toImport:
         obj=__import__('modules.'+i,globals(),locals(),[i])
@@ -33,3 +38,5 @@ def new(form):
         i.start()
     return("Scan Complete")
 
+
+ 

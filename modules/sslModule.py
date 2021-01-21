@@ -4,7 +4,6 @@ from cryptography import x509
 from cryptography.hazmat.backends.openssl import backend
 from OpenSSL import crypto
 import pickle
-import sqlite3
 from db import insert
 
 class sslModule:
@@ -15,6 +14,7 @@ class sslModule:
         self.connection=connection
         self.timestamp=timestamp
         self.ip=socket.gethostbyname(self.target)
+        self.collectedData={}
 
     def start(self):
         certpem=ssl.get_server_certificate((self.ip,443))

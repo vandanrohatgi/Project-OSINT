@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request,redirect,g,session,url_for
 from newscan import new
 from history import retrieve
+import json
 from db import initialize
 
 initialize()
 app=Flask(__name__,static_url_path='',static_folder='web/static',template_folder='web/templates')
 app.secret_key="somethingcomplex"
+app.env="development"
+app.debug=True
 
 
 class User:
@@ -13,6 +16,9 @@ class User:
         self.id = uuid
         self.username = username
         self.password = password
+
+'''with open("keys.json") as creds:
+    credentials=json.load(creds)['credentials']'''
 
 users = []
 users.append(User(uuid=1, username='test', password='test'))
@@ -90,11 +96,11 @@ def getInfo():
         return render_template('results.html',result=result,head=head)
     else:
         return(retrieve(uuid,data))
-
+'''
 @app.route('/test')
 def test():
     rows={'name':'lol','surname':'loli'}
-    return render_template("test.html",rows=rows)
+    return render_template("test.html",rows=rows)'''
 
 if __name__ == "__main__":
     app.run()

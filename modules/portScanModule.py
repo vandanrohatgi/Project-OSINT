@@ -1,6 +1,5 @@
 import socket
 import threading
-import sqlite3
 import pickle
 from db import insert
 
@@ -16,24 +15,19 @@ class portScanModule:
             '445', '465', '512', '513', '514', '515', '3306',
             '5432', '1521', '2638', '1433', '3389', '5900', '5901', '5902','5903', '5631', '631',
             '636','990', '992', '993', '995', '1080', '8080', '8888', '9000']
-        self.ports={}
+        self.collectedData={}
         self.lock=threading.Lock()
         self.threads=[]
 
     def scan(self,port):
-        '''pkt=IP(dst=self.target)/TCP(dport=port,flags='S')
-        ans=sr1(pkt,timeout=5,verbose=False)
-        if ans!=None and ans[TCP].flags=='SA':
-            self.lock.acquire()
-            self.ports.update({str(self.ip)+':'+port:'open'})
-            self.lock.release()'''
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             #sock.settimeout(10)
             sock.connect((self.ip,int(port)))   
             sock.close()
             with self.lock:
-                self.ports.update({str(self.ip)+':'+port:'open'})
+                self.collectedData[str(self.ip)]=port
+                #self.ports.update({str(self.ip)+':'+port:'open'})
         except socket.error:
             pass
         
@@ -43,9 +37,6 @@ class portScanModule:
             self.ip=socket.gethostbyname(self.target)
         except:
             print("cannot resolve domain")
-            cursor=self.connection.cursor()
-            cursor.execute("INSERT INTO output VALUES (?,?,?,?,'PortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,''))
-            self.connection.commit()
             return
             
         for x in range(len(self.commonPorts)):
@@ -54,11 +45,8 @@ class portScanModule:
         for x in range(len(self.commonPorts)):
             self.threads[x].join()
 
-        byteData=pickle.dumps(self.ports)
+        byteData=pickle.dumps(self.collectedData)
         insert(self.uuid,self.name,self.target,self.timestamp,'PortScanModule',byteData,self.connection)
-        '''cursor=self.connection.cursor()
-        cursor.execute("INSERT INTO output VALUES (?,?,?,?,'PortScanModule',?)",(self.uuid,self.name,self.target,self.timestamp,byteData))
-        self.connection.commit()'''
 
 
 
