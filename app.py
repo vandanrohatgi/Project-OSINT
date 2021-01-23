@@ -2,60 +2,50 @@ from flask import Flask, render_template, request,redirect,g,session,url_for
 from newscan import new
 from history import retrieve
 import json
-from db import initialize
 
-initialize()
+
 app=Flask(__name__,static_url_path='',static_folder='web/static',template_folder='web/templates')
 app.secret_key="somethingcomplex"
 app.env="development"
 app.debug=True
 
 
-class User:
-    def __init__(self, uuid, username, password):
-        self.id = uuid
-        self.username = username
-        self.password = password
+with open("keys.json") as creds:
+    credentials=json.load(creds)['credentials']
 
-'''with open("keys.json") as creds:
-    credentials=json.load(creds)['credentials']'''
-
-users = []
-users.append(User(uuid=1, username='test', password='test'))
-#users.append(User(uuid=2, username='Becca', password='secret'))
-#users.append(User(uuid=3, username='Carlos', password='somethingsimple'))
+users=credentials.keys()
 
 @app.before_request
 def before_request():
     g.user=None
-    if 'user_id' in session:
-        user=[x for x in users if x.id == session['user_id']][0]
-        g.user=user
+    if 'user' in session:
+        g.user=session['user']
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        session.pop('user_id', None)
+        session.pop('user', None)
 
         username = request.form.get('username')
         password = request.form.get('password')
         
         user=None
         for x in users:
-            if x.username==username:
+            if x==username:
                 user=x
                 break
 
-        #user = [x for x in users if x.username == username][0]
-        if user and user.password == password:
-            session['user_id'] = user.id
+        if user and credentials[user] == password:
+            session['user'] = user
             return redirect(url_for('history'))
         return redirect(url_for('login'))
     return render_template('login.html')
 
+
 @app.route('/logout')
 def logout():
-    session.pop('user_id',None)
+    session.pop('user',None)
     return redirect(url_for('login'))
 
 @app.route('/')
@@ -96,11 +86,7 @@ def getInfo():
         return render_template('results.html',result=result,head=head)
     else:
         return(retrieve(uuid,data))
-'''
-@app.route('/test')
-def test():
-    rows={'name':'lol','surname':'loli'}
-    return render_template("test.html",rows=rows)'''
+
 
 if __name__ == "__main__":
     app.run()
