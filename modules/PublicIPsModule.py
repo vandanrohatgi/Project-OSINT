@@ -46,7 +46,7 @@ class PublicIPsModule:
 	def start(self):
 		with open("keys.json") as keys:
 			api=json.load(keys)["Censys"]["API"]
-			secret=json.load(keys)["Censys"]["Secret"]
+			secret=json.load(keys)["Censys"]["secret"]
 		if api =="" or secret =="":
 			print("Kindly provide the Censys API key and secret key")
 			return
