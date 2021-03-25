@@ -30,8 +30,6 @@ python3 app.py
 - To create your own module use the contents of the "moduletemplate.txt" file.
 - Place your module in the modules directory and add the name of your module in the list given in newscan.py
 
-Why did I make this?
-I wanted to learn about OSINT, recon and web apps.
 
 ## Modules till now
 - Port Scan and All port scan: As the name suggests, used for web server port scanning
