@@ -44,14 +44,13 @@ class PublicIPsModule:
 			self.IPs[x]=""'''
 
 	def start(self):
-		'''with open("keys.json") as keys:
-			api=json.load(keys)["Censys"][0]
-			secret=json.load(keys)["Censys"][1]
+		with open("keys.json") as keys:
+			data=json.load(keys)
+			api=data["Censys"][0]
+			secret=data["Censys"][1]
 		if api ==" " or secret ==" ":
 			print("Kindly provide the Censys API key and secret key")
-			return'''
-		api="0e545594-a41d-49b3-999c-c108191e86d5"
-		secret="xg1I6RwXRkAxCGfrE8xW8jvIPQJLxPq3"
+			return
 		self.censys(api,secret)
 		#self.threatCrowd()
 		byteData=pickle.dumps(self.collectedData)
