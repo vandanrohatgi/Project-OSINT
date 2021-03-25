@@ -13,7 +13,7 @@ class PublicIPsModule:
 		self.IPs={}
 		self.collectedData={}
 		self.final=[]
-	
+
 	def censys(self,api,secret):
 		url='https://censys.io/api/v1'
 		query={"query":self.target,'fields':["ip"],}
@@ -44,12 +44,14 @@ class PublicIPsModule:
 			self.IPs[x]=""'''
 
 	def start(self):
-		with open("keys.json") as keys:
-			api=json.load(keys)["Censys"]["API"]
-			secret=json.load(keys)["Censys"]["secret"]
-		if api =="" or secret =="":
+		'''with open("keys.json") as keys:
+			api=json.load(keys)["Censys"][0]
+			secret=json.load(keys)["Censys"][1]
+		if api ==" " or secret ==" ":
 			print("Kindly provide the Censys API key and secret key")
-			return
+			return'''
+		api="0e545594-a41d-49b3-999c-c108191e86d5"
+		secret="xg1I6RwXRkAxCGfrE8xW8jvIPQJLxPq3"
 		self.censys(api,secret)
 		#self.threatCrowd()
 		byteData=pickle.dumps(self.collectedData)

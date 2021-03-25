@@ -2,6 +2,7 @@ import socket
 import threading
 import pickle
 from db import insert
+from subprocess import run
 
 class portScanModule:
     def __init__(self,uuid,name,target,timestamp,connection):
@@ -33,7 +34,7 @@ class portScanModule:
         
 
     def start(self):
-        try:
+        '''try:
             self.ip=socket.gethostbyname(self.target)
         except:
             print("cannot resolve domain")
@@ -43,7 +44,15 @@ class portScanModule:
             self.threads.append(threading.Thread(target=self.scan,args=(self.commonPorts[x],)))
             self.threads[x].start()
         for x in range(len(self.commonPorts)):
-            self.threads[x].join()
+            self.threads[x].join()'''
+        run(["nmap -Pn -oN nmap.txt {}".format(self.target)],shell=True)
+        f=open("nmap.txt","r")
+        data=f.read()
+        data=data.split('\n')
+        for x in data:
+            if 'open' in x:
+                self.collectedData[x]=""
+        
 
         byteData=pickle.dumps(self.collectedData)
         insert(self.uuid,self.name,self.target,self.timestamp,'PortScanModule',byteData,self.connection)

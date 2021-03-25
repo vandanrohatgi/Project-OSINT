@@ -45,6 +45,7 @@ class emailModule:
 			print("Snov.io Access token could not be generated")
 			return
 		apidata=self.get_domain_search(token)
+		print(apidata)
 		for email in apidata['emails']:
 			self.collectedData[email.get('email')]=email.get('position',' ')
 		
