@@ -3,6 +3,7 @@ __pycache__/
 
 # Environments
 env/
+venv/
 
 #misc
 osint.db
@@ -10,4 +11,6 @@ api.txt
 tld.cache
 *.pyc
 keys.json
-
+tests/
+s3bucketModule/
+.vscode/

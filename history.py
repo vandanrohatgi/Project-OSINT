@@ -3,7 +3,7 @@ import pickle
 import json
 
 def retrieve(uuid=None,data=None):
-    connection=sqlite3.connect("/home/vandan/osint/osint.db")
+    connection=sqlite3.connect("./osint.db")
     connection.row_factory=sqlite3.Row
     cursor=connection.cursor()
     if uuid==None and data==None:    
