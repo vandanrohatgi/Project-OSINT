@@ -2,7 +2,6 @@ import pickle
 from db import insert
 import json
 import requests
-import sqlite3
 
 #https://emailcrawlr.com/pricing
 #https://hunter.io/api

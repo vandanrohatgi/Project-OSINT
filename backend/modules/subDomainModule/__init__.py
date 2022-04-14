@@ -1,8 +1,5 @@
-import sqlite3
 import pickle
 from db import insert
-from subprocess import run
-from os import path
 import requests
 
 class subDomainModule:

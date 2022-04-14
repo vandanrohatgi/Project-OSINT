@@ -1,4 +1,3 @@
-import sqlite3
 import pickle
 from db import insert
 import requests

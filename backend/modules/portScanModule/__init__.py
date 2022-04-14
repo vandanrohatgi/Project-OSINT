@@ -2,7 +2,6 @@ import socket
 import threading
 import pickle
 from db import insert
-from subprocess import run
 
 class portScanModule:
     def __init__(self,uuid,name,target,timestamp,connection):
