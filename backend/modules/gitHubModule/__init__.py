@@ -47,5 +47,7 @@ class gitHubModule:
 				print("Sleeping...")
 				sleep(60)
 				count=0
-		byteData=pickle.dumps(self.collectedData)
-		insert(self.uuid,self.name,self.target,self.timestamp,'gitHubModule',byteData,self.connection)
+		'''byteData=pickle.dumps(self.collectedData)
+		insert(self.uuid,self.name,self.target,self.timestamp,'gitHubModule',byteData,self.connection)'''
+		with open(f"past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
+			json.dump(self.collectedData,f)

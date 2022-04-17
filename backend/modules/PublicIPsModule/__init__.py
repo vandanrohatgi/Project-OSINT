@@ -55,5 +55,7 @@ class PublicIPsModule:
 			return'''
 		#self.censys(api,secret)
 		self.threatCrowd()
-		byteData=pickle.dumps(self.collectedData)
-		insert(self.uuid,self.name,self.target,self.timestamp,'getPublicIPsModule',byteData,self.connection)
+		with open(f"past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
+			json.dump(self.collectedData,f)
+		'''byteData=pickle.dumps(self.collectedData)
+		insert(self.uuid,self.name,self.target,self.timestamp,'getPublicIPsModule',byteData,self.connection)'''

@@ -2,7 +2,7 @@ import sqlite3
 import pickle
 import json
 
-def retrieve(uuid=None,data=None):
+'''def retrieve(uuid=None,data=None):
     connection=sqlite3.connect("./osint.db")
     connection.row_factory=sqlite3.Row
     cursor=connection.cursor()
@@ -24,7 +24,20 @@ def retrieve(uuid=None,data=None):
         row=cursor.fetchone()
         Data=pickle.loads(row['Data'])
         return(json.dumps(Data))
-
-
+'''
+def retrieve(uuid=None,data=None):
+    if uuid==None and data==None:
+        with open("past_scans/meta.json",'r') as f:
+            meta_data=json.load(f)
+        return meta_data
+    elif uuid!=None and data==None:
+        with open(f"past_scans/meta.json",'r') as f:
+            meta_data=json.load(f)[uuid]
+        return meta_data
+    if uuid!=None and data!=None:
+        with open(f"past_scans/{uuid}/{data}.json",'r') as f:
+            scan_data=json.load(f)
+        return scan_data
+    
         
 #retrieve('27c9d478','sslModule')

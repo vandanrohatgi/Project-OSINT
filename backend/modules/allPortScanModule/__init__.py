@@ -1,3 +1,4 @@
+import json
 import socket
 import threading
 import pickle
@@ -45,13 +46,15 @@ class allPortScanModule:
             t=threading.Thread(target=self.threader)
             t.daemon=True
             t.start()
-        for port in range(1,1024):
+        for port in range(1,65000):
             self.q.put(port)
         
         self.q.join()
-        print(self.collectedData)
-        byteData=pickle.dumps(self.ports)
-        insert(self.uuid,self.name,self.target,self.timestamp,'allPortScanModule',byteData,self.connection)
+        #print(self.collectedData)
+        #byteData=pickle.dumps(self.collectedData)
+        with open(f"{self.uuid}/.{self.__class__.__name__}.json","w") as f:
+            json.dump(self.collectedData,f)
+        #insert(self.uuid,self.name,self.target,self.timestamp,'allPortScanModule',byteData,self.connection)
 
 
 

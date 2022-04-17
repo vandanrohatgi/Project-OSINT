@@ -1,3 +1,4 @@
+import json
 import socket
 #from OpenSSL import crypto'''
 import pickle
@@ -21,5 +22,7 @@ class sslModule:
     def start(self):
         self.collectedData=newScan(self.target)
         #self.collectedData=resultsFromCache(self.target)
-        byteData=pickle.dumps(self.collectedData)
-        insert(self.uuid,self.name,self.target,self.timestamp,'sslModule',byteData,self.connection)
+        with open(f"past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
+            json.dump(self.collectedData,f)
+        '''byteData=pickle.dumps(self.collectedData)
+        insert(self.uuid,self.name,self.target,self.timestamp,'sslModule',byteData,self.connection)'''
