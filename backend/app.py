@@ -71,7 +71,7 @@ def logout():
     return redirect(url_for('login'))
 '''
 
-@app.route('/logout',methods=['POST'])
+@app.route('/logout',methods=['GET'])
 @jwt_required()
 def logout():
     response = jsonify({"msg": "logout successful"})
