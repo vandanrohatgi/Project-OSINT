@@ -21,9 +21,10 @@ import json
         "CREATE TABLE output (ID varchar,Name varchar ,Target varchar,Time varchar,Module varchar, Data blob)"
     )'''
 
-if not os.exists("./past_scans/meta.json"):
-    os.mkdir("past_scans")
-    with open("past_scans/meta.json") as f:
+os.mkdir("past_scans")
+
+if not os.path.exists("past_scans/meta.json"):
+    with open("past_scans/meta.json",'w') as f:
         json.dump({},f)
 
 if not os.path.exists("./keys.json"):
