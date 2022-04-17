@@ -109,12 +109,25 @@ def startScan():
     #if (len(request.form)<3):
     #    return("Please select at least one module")
     #params=request.data.decode('utf-8')
+    """
+    {
+        "name":<name of scan>,
+        "target":<target domain>,
+        "modules":['portScanModule','sslModule','emailModule','subDomainModule','allPortScanModule','PublicIPsModule','gitHubModule']
+    }
+    """
     params=request.json
     return(new(params))
 
 @app.route('/getScanInfo',methods=['GET'],endpoint='info')
 @jwt_required
 def info():
+    """
+    {
+        "id":<Scan ID> (Optional),
+        "data":<module name> (Optional)
+    }
+    """
     id=request.args.get('id',None)
     data=request.args.get('data',None)
     past_scan=retrieve(uuid=id,data=data)
