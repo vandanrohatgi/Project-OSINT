@@ -4,12 +4,14 @@ from newscan import new
 from history import retrieve
 import json
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity,unset_jwt_cookies, jwt_required, JWTManager
+from flask_cors import CORS,cross_origin
 
 
 
-app=Flask(__name__,static_url_path='',static_folder='web/static',template_folder='web/templates')
-#app=Flask(__name__)
+#app=Flask(__name__,static_url_path='',static_folder='web/static',template_folder='web/templates')
+app=Flask(__name__)
 #app.secret_key="somethingcomplex"
+CORS(app=app,supports_credentials=True)
 app.config["JWT_SECRET_KEY"]="change_this_later"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt=JWTManager(app)
@@ -146,4 +148,4 @@ def info():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
