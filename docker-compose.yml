@@ -4,7 +4,9 @@ services:
     build: ./backend
     ports: 
       - "5000:5000"
+    container_name: OSINT_backend
   frontend:
     build: ./frontend
     ports:
       - "3000:3000"
+    container_name: OSINT_frontend
