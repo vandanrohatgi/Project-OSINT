@@ -1,0 +1,7 @@
+.App{
+    display: flex;
+}
+
+.Header{
+    flex: 1;
+}
