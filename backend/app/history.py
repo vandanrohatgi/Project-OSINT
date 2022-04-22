@@ -1,5 +1,3 @@
-import sqlite3
-import pickle
 import json
 
 '''def retrieve(uuid=None,data=None):
@@ -27,15 +25,15 @@ import json
 '''
 def retrieve(uuid=None,data=None):
     if uuid==None and data==None:
-        with open("past_scans/meta.json",'r') as f:
+        with open("app/past_scans/meta.json",'r') as f:
             meta_data=json.load(f)
         return meta_data
     elif uuid!=None and data==None:
-        with open(f"past_scans/meta.json",'r') as f:
+        with open(f"app/past_scans/meta.json",'r') as f:
             meta_data=json.load(f)[uuid]
         return meta_data
     if uuid!=None and data!=None:
-        with open(f"past_scans/{uuid}/{data}.json",'r') as f:
+        with open(f"app/past_scans/{uuid}/{data}.json",'r') as f:
             scan_data=json.load(f)
         return scan_data
     

@@ -29,7 +29,8 @@ api.txt
 tld.cache
 *.pyc
 keys.json
-tests/
 s3bucketModule/
 .vscode/
 past_scans/
+*egg-info/
+*cache*

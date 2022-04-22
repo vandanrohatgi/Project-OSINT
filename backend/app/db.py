@@ -1,5 +1,3 @@
-import sqlite3
-import pickle
 import os
 import json
 
@@ -28,7 +26,7 @@ if not os.path.exists("past_scans/meta.json"):
     with open("past_scans/meta.json",'w') as f:
         json.dump({},f)
 
-if not os.path.exists("./keys.json"):
+if not os.path.exists("keys.json"):
     keys = {
         "credentials": {"test": "test"},
         "mineLead": "",

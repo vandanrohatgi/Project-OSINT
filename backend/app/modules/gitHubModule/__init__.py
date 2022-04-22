@@ -1,5 +1,4 @@
-import pickle
-from db import insert
+
 import requests
 from urllib import parse
 from time import sleep

@@ -1,7 +1,5 @@
 import json
 import requests
-import pickle
-from db import insert
 
 #https://search.censys.io/api
 class PublicIPsModule:

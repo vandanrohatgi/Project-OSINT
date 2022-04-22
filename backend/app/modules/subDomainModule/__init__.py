@@ -1,6 +1,4 @@
 import json
-import pickle
-from db import insert
 import requests
 
 class subDomainModule:

@@ -1,9 +1,6 @@
 import json
-from unicodedata import name
 import uuid
-import sqlite3
 from datetime import datetime
-import re
 import os
 
 modules=['portScanModule','sslModule','emailModule','subDomainModule','allPortScanModule','PublicIPsModule','gitHubModule']

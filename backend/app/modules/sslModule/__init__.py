@@ -1,7 +1,5 @@
 import json
 import socket
-#from OpenSSL import crypto'''
-import pickle
 from db import insert
 from modules.sslModule.ssllabsscanner import newScan,resultsFromCache
 #import re

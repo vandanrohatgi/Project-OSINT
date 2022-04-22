@@ -1,5 +1,3 @@
-import pickle
-from db import insert
 import json
 import requests
 
