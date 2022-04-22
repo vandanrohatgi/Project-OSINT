@@ -50,7 +50,7 @@ def new(form):
     
     for i in objects:
         i.start()
-    return("Scan Complete")
+    return
 
 
  

@@ -107,7 +107,7 @@ def flask_app():
     '''
 
     @app.route('/start',methods=['POST'])
-    @jwt_required
+    @jwt_required()
     def startScan():
         #if (len(request.form)<3):
         #    return("Please select at least one module")
@@ -120,10 +120,11 @@ def flask_app():
         }
         """
         params=request.json
-        return(new(params))
+        new(params)
+        return jsonify({"msg":"Scan Complete!"})
 
     @app.route('/getScanInfo',methods=['GET'],endpoint='info')
-    @jwt_required
+    @jwt_required()
     def info():
         """
         {
