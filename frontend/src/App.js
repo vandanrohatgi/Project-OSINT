@@ -1,30 +1,16 @@
-// import Header from "./components/Header/Header";
-
-// function App() {
-//   return (
-//     <div>
-//       <Header />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
 import "./App.css";
-import Header from "./components/Header/Header";
-import SideBar from "./components/SideBar/SideBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login/Login";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   return (
-    <div className="App">
-      <div className="SideBar">
-        <SideBar />
-      </div>
-      <div className="Header">
-        <Header />
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
