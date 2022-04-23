@@ -13,16 +13,18 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: setup Heroku CLI
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
       run: |
         curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 #    - name: Build the Docker image
 #      working-directory: backend/
 #      run: docker build . --file Dockerfile --tag osint-backend:latest
     - name: Push image to heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
       working-directory: backend/
       run: heroku container:push web -a osint-backend
-    - name: deploy application 
+    - name: deploy application
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
       working-directory: backend/ 
       run: heroku container:release web -a osint-backend
