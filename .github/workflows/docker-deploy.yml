@@ -22,6 +22,7 @@ jobs:
       working-directory: backend/
       run: docker build . --file Dockerfile --tag osint-backend:latest
     - name: Push image to heroku
-      run: |
-        heroku container:push osint-backend:latest
-        heroku container:release osint-backend:latest
+      working-directory: backend/
+      run: heroku container:push web
+    - name: deploy application  
+      run: heroku container:release web
