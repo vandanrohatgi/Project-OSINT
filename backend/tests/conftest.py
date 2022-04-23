@@ -11,4 +11,3 @@ def app():
 def test_client(app):
     client=app.test_client()
     return client
-

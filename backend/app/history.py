@@ -32,7 +32,7 @@ def retrieve(uuid=None,data=None):
         with open(f"app/past_scans/meta.json",'r') as f:
             meta_data=json.load(f)[uuid]
         return meta_data
-    if uuid!=None and data!=None:
+    elif uuid!=None and data!=None:
         with open(f"app/past_scans/{uuid}/{data}.json",'r') as f:
             scan_data=json.load(f)
         return scan_data
