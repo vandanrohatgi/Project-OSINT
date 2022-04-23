@@ -18,11 +18,12 @@ jobs:
       run: |
         curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
         heroku container:login
-    - name: Build the Docker image
-      working-directory: backend/
-      run: docker build . --file Dockerfile --tag osint-backend:latest
+#    - name: Build the Docker image
+#      working-directory: backend/
+#      run: docker build . --file Dockerfile --tag osint-backend:latest
     - name: Push image to heroku
       working-directory: backend/
-      run: heroku container:push web
-    - name: deploy application  
-      run: heroku container:release web
+      run: heroku container:push -a web
+    - name: deploy application 
+      working-directory: backend/ 
+      run: heroku container:release -a web
