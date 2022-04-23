@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: setup Heroku CLI
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
+      run: |
+        curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+        heroku container:login
+    - name: Build the Docker image
+      working-directory: backend/
+      run: docker build . --file Dockerfile --tag osint-backend:latest
+    - name: Push image to heroku
+      run: |
+        heroku container:push osint-backend:latest
+        heroku container:release osint-backend:latest
