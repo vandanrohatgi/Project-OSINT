@@ -27,7 +27,7 @@ function Login() {
     await post("/login", credentials)
       .then(({ data }) => {
         sessionStorage.setItem("accessToken", data.access_token);
-        navigate("/dashboard");
+        navigate(0);
       })
       .catch((err) => {
         console.log(err);
