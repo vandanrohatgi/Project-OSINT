@@ -2,10 +2,14 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
 }
 
 body {
   height: 100vh;
   width: 100vw;
   background: black;
+  background-image: url("./assets/img/globe-upper.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }

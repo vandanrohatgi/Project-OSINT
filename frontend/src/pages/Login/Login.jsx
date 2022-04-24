@@ -39,6 +39,7 @@ function Login() {
   }
   return (
     <div>
+      <div className={styles.title}>Project OSINT</div>
       <div className={styles.LoginFormContainer}>
         <div className={styles.AuthIcon}>
           <MdOutlineSecurity />
