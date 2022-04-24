@@ -18,7 +18,7 @@ jobs:
         (
         echo "${{ secrets.HEROKU_EMAIL }}"
         echo "${{ secrets.HEROKU_API }}"
-        ) | heroku login
+        ) | heroku login --interactive
         docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
 #    - name: Build the Docker image
 #      working-directory: backend/
