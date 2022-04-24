@@ -16,8 +16,8 @@ jobs:
       run: |
         curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
         (
-        echo "${{ secrets.HEROKU_API }}"
         echo "${{ secrets.HEROKU_EMAIL }}"
+        echo "${{ secrets.HEROKU_API }}"
         ) | heroku login
         docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
 #    - name: Build the Docker image
