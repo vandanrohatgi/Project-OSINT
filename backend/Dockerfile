@@ -7,5 +7,6 @@ RUN pip install -r requirements.txt
 RUN pip install -e .
 ENV FLASK_APP=/app:flask_app
 ENV FLASK_RUN_HOST=0.0.0.0
-EXPOSE 5000
-CMD ["flask","run"]
+ENV PORT=5000
+#EXPOSE 5000
+CMD ["flask","run","--host=${FLASK_RUN_HOST}","--port=${PORT}"]
