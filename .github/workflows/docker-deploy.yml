@@ -15,16 +15,21 @@ jobs:
     - name: setup Heroku CLI
       run: |
         curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+        (
+        echo "${{ secrets.HEROKU_API }}"
+        echo "${{ secrets.HEROKU_EMAIL }}"
+        ) | heroku login
+        docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
 #    - name: Build the Docker image
 #      working-directory: backend/
 #      run: docker build . --file Dockerfile --tag osint-backend:latest
     - name: Push image to heroku
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
+      #env:
+      #  HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
       working-directory: backend/
       run: heroku container:push web -a osint-backend
     - name: deploy application
-      env:
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
+      #env:
+      #  HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
       working-directory: backend/ 
       run: heroku container:release web -a osint-backend
