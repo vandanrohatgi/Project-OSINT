@@ -1,0 +1,18 @@
+.LoginFormContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 500px;
+  padding: 2rem;
+  background: #3b3b3b;
+  border-radius: 20px;
+ 
+}
+
+.AuthIcon {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom:2rem;
+}

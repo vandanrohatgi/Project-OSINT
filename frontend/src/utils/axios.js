@@ -8,8 +8,8 @@ export const get = (path, params = {}) =>
     params,
   });
 
-export const post = (path, params = {}) =>
-  axiosInstance.post(BASE_URL + path, params);
+export const post = (path, body = {}) =>
+  axiosInstance.post(BASE_URL + path, body);
 
 export const put = (path, params = {}) =>
   axiosInstance.put(BASE_URL + path, params);
