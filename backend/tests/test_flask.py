@@ -9,7 +9,7 @@ def test_index_response(client):
     response=client.get("/")
     assert response.json["msg"]=="API works!"
 
-@patch('flask_jwt_extended.view_decorators.verify_jwt_in_request')
+@patch('flask_jwt_extended.view_decorators.verify_jwt_in_request')  ### disable jwt_required() (authentication) for this test
 def test_auth(mock_jwt_token,client):
     response=client.post("/login",data=json.dumps({"username":"test","password":"test"}),content_type="application/json")
     assert response.status_code==200
