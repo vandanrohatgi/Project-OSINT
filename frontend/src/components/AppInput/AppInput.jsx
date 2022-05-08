@@ -1,7 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
 
-function Input(props) {
+function AppInput(props) {
   const { value, onChange, placeholder, type, label, ...rest } = props;
   return (
     <Form.Group className="mb-3">
@@ -17,4 +17,4 @@ function Input(props) {
   );
 }
 
-export default Input;
+export default AppInput;
