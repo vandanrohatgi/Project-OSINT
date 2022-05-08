@@ -2,34 +2,23 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
+    paths:
+      - "backend/**"
+      - "!backend/tests/**"
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: setup Heroku CLI
-      run: |
-        curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-        (
-        echo "${{ secrets.HEROKU_EMAIL }}"
-        echo "${{ secrets.HEROKU_API }}"
-        ) | heroku login --interactive
-        docker login --username=_ --password=$(heroku auth:token) registry.heroku.com
-#    - name: Build the Docker image
-#      working-directory: backend/
-#      run: docker build . --file Dockerfile --tag osint-backend:latest
-    - name: Push image to heroku
-      #env:
-      #  HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
-      working-directory: backend/
-      run: heroku container:push web -a osint-backend
-    - name: deploy application
-      #env:
-      #  HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
-      working-directory: backend/ 
-      run: heroku container:release web -a osint-backend
+      - uses: actions/checkout@v3
+      - name: install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+      - name: heroku deploy
+        working-directory: backend/
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
+        run: |
+          heroku container:login
+          heroku container:push web -a osint-backend
+          heroku container:release web -a osint-backend
