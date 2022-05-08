@@ -1,3 +1,10 @@
+.wrapper{
+  width:100vw;
+  height:100vh;
+  background-image: url("../../assets/img/globe-upper.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 .title {
   position: absolute;
   top: 50px;
