@@ -2,18 +2,21 @@ import json
 import socket
 import threading
 from queue import Queue
+import uuid
 
-class allPortScanModule:
-    def __init__(self,uuid,name,target,timestamp,connection):
-        self.name=name
+class portScanModule:
+    def __init__(self,uuid,target,db):
+        #self.name=name
         self.target=target
         self.uuid=uuid
-        self.connection=connection
-        self.timestamp=timestamp
-        self.ports={}
+        #self.connection=connection
+        #self.timestamp=timestamp
+        #self.date=date
+        #self.ports={}
         self.lock=threading.Lock()
         self.q=Queue()
         self.collectedData={}
+        self.db=db
         #socket.setdefaulttimeout(1)
 
     def scan(self,port):
@@ -21,7 +24,7 @@ class allPortScanModule:
         try:
             sock.connect((self.ip,int(port)))   
             with self.lock:
-                self.collectedData[port]="Open"
+                self.collectedData[str(port)]="Open"
                 print(f"{port} is open")
             sock.close()
                 #self.ports.update({str(self.ip)+':'+str(port):'open'})
@@ -44,23 +47,14 @@ class allPortScanModule:
             t=threading.Thread(target=self.threader)
             t.daemon=True
             t.start()
-        for port in range(1,65000):
+        for port in range(1,65535):
             self.q.put(port)
         
         self.q.join()
         #print(self.collectedData)
         #byteData=pickle.dumps(self.collectedData)
-        with open(f"{self.uuid}/.{self.__class__.__name__}.json","w") as f:
-            json.dump(self.collectedData,f)
-        #insert(self.uuid,self.name,self.target,self.timestamp,'allPortScanModule',byteData,self.connection)
-
-
-
-
-
-
-
-
-
-
+        self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
+        """with open(f"app/past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
+            json.dump(self.collectedData,f)"""
+        #insert(self.uuid,self.name,self.target,self.timestamp,'PortScanModule',byteData,self.connection)
 

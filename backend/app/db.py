@@ -1,6 +1,6 @@
 import os
 import json
-
+import pymongo
 
 '''def insert(uuid, name, target, timestamp, module, data, connection):
     cursor = connection.cursor()
@@ -17,7 +17,7 @@ import json
     cursor = connection.cursor()
     cursor.execute(
         "CREATE TABLE output (ID varchar,Name varchar ,Target varchar,Time varchar,Module varchar, Data blob)"
-    )'''
+    )
 
 if not os.path.exists("past_scans"):
     os.mkdir("past_scans")
@@ -34,3 +34,36 @@ if not os.path.exists("keys.json"):
     }
     with open("keys.json", "w") as outfile:
         json.dump(keys, outfile)
+'''
+
+class database:
+    def __init__(self) -> None:
+        mongodb_url=os.environ.get("MONGODB_URL")
+        self.client = pymongo.MongoClient(mongodb_url)
+        self.db=self.client['SecureApp']
+
+    def put_object(self,object):
+        collection=self.db['Scans']
+        result=collection.insert_one(object)
+        return result.inserted_id
+    
+    def update_object(self,scan_id,update_data):
+        collection=self.db['Scans']
+        collection.update_one({"_id":scan_id},{"$set":update_data})
+    
+    def get_creds(self):
+        collection=self.db['credentials']
+        return collection.find()
+        """for i in collection:
+                if i.get('credentials',None)!=None:
+                    return i['credentials']"""
+    def get_results(self,scan_id=None):
+        collection=self.db['Scans']
+        if scan_id != None:
+            return collection.find_one({"_id":scan_id})
+        return collection.find()
+
+'''obj=database()
+
+for i in obj.get_object("credentials").find():
+    print(i)'''

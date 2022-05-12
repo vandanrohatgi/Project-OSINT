@@ -5,12 +5,12 @@ from time import sleep
 import json
 
 class gitHubModule:
-	def __init__(self,uuid,name,target,timestamp,connection):
+	def __init__(self,uuid,target):
 		self.uuid=uuid
-		self.name=name
+		#self.name=name
 		self.target=target
-		self.connection=connection
-		self.timestamp=timestamp
+		#self.connection=connection
+		#self.timestamp=timestamp
 		self.collectedData={}
 		self.url='https://api.github.com/search/code?q='
 		self.gitResult='<a href="https://github.com/search?q={}&type=code" target="_blank" rel="noopener noreferrer">{}</a>'
@@ -34,7 +34,7 @@ class gitHubModule:
 		header={"Authorization":"token "+token}
 		count=0
 		current=0
-		with open("./modules/gitHubModule/gitDorks/alldorks.txt") as alldorks:
+		with open("app/modules/gitHubModule/gitDorks/alldorks.txt") as alldorks:
 			dorks=alldorks.read()
 		dorks=dorks.split("\n")
 		while current<len(dorks):

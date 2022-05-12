@@ -3,12 +3,12 @@ import requests
 
 #https://search.censys.io/api
 class PublicIPsModule:
-	def __init__(self,uuid,name,target,timestamp,connection):
+	def __init__(self,uuid,target):
 		self.uuid=uuid
-		self.name=name
+		#self.name=name
 		self.target=target
-		self.connection=connection
-		self.timestamp=timestamp
+		#self.connection=connection
+		#self.timestamp=timestamp
 		self.IPs={}
 		self.collectedData={}
 		self.final=[]
@@ -53,7 +53,7 @@ class PublicIPsModule:
 			return'''
 		#self.censys(api,secret)
 		self.threatCrowd()
-		with open(f"past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
+		with open(f"app/past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
 			json.dump(self.collectedData,f)
 		'''byteData=pickle.dumps(self.collectedData)
 		insert(self.uuid,self.name,self.target,self.timestamp,'getPublicIPsModule',byteData,self.connection)'''

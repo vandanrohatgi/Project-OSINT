@@ -15,7 +15,7 @@ modules=['portScanModule','sslModule','emailModule','subDomainModule','allPortSc
     else:
         return False'''
 
-def new(form):
+def new(form,db):
     toImport=[]
     objects=[]
     '''params=form.split('&')
@@ -26,8 +26,10 @@ def new(form):
     name=form['name']
     target=form['target']
     toImport=form['modules']
-    newID=str(uuid.uuid4())[:8]
-    os.mkdir(f"past_scans/{newID}")
+    #newID=str(uuid.uuid4())[:8]
+    #print(os.getcwd())
+    scan_id=db.put_object({"name":name,"target":target,"date":date,"time":time,"modules":toImport})
+    #os.mkdir(f"app/past_scans/{newID}")
     #os.makedirs(f"past_scans/{newID}")
     #if isDomain(target):
     '''for i in modules:
@@ -36,17 +38,17 @@ def new(form):
     #else:'''
     #    toImport=keyword
     #connection=sqlite3.connect("./osint.db")
-    with open("past_scans/meta.json","r") as f:
+    """with open("app/past_scans/meta.json","r") as f:
         meta_data=json.load(f)
         meta_data[newID]={"name":name,"target":target,"time":time,"date":date,"modules":toImport}
-    with open("past_scans/meta.json","w") as f:
-        json.dump(meta_data,f)
+    with open("app/past_scans/meta.json","w") as f:
+        json.dump(meta_data,f)"""
     
     for i in toImport:
         #obj=__import__('modules.'+i,globals(),locals(),[i])
-        module_obj=__import__('modules.'+i,globals(),locals(),[i])
+        module_obj=__import__('app.modules.'+i,globals(),locals(),[i])
         #objects.append(getattr(module_obj,i)(newID,name,target,timestamp,connection))
-        objects.append(getattr(module_obj,i)(newID,name,target,time,date))
+        objects.append(getattr(module_obj,i)(scan_id,target,db))
     
     for i in objects:
         i.start()

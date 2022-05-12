@@ -6,7 +6,7 @@ import json
 from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity,unset_jwt_cookies, jwt_required, JWTManager
 from flask_cors import CORS,cross_origin
 import uuid
-
+from app.db import database
 
 def flask_app():
 #app=Flask(__name__,static_url_path='',static_folder='web/static',template_folder='web/templates')
@@ -15,15 +15,15 @@ def flask_app():
     CORS(app=app,supports_credentials=True)
     app.config["JWT_SECRET_KEY"]=str(uuid.uuid1())
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
-
+    db=database()
     jwt=JWTManager(app)
     app.env="development"
     app.debug=True
 
-
-    with open("app/keys.json") as creds:
+    credentials=[x['credentials'] for x in db.get_creds() if x.get('credentials',None)!=None][0]
+    '''with open("app/keys.json") as creds:
         credentials=json.load(creds)['credentials']
-
+'''
     users=credentials.keys()
 
     @app.route('/login',methods=['POST'])
@@ -61,7 +61,7 @@ def flask_app():
         }
         """
         params=request.json
-        new(params)
+        new(params,db)
         return jsonify({"msg":"Scan Complete!"})
 
     @app.route('/getScanInfo',methods=['GET'],endpoint='info')

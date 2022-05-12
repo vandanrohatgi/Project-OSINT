@@ -6,12 +6,12 @@ import requests
 #https://minelead.io
 
 class emailModule:
-	def __init__(self,uuid,name,target,timestamp,connection):
+	def __init__(self,uuid,target,db):
 		self.uuid=uuid
-		self.name=name
+		#self.name=name
 		self.target=target
-		self.connection=connection
-		self.timestamp=timestamp
+		#self.connection=connection
+		#self.timestamp=timestamp
 		self.collectedData={}
 	
 	def get_access_token(self):

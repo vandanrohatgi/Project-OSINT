@@ -18,6 +18,7 @@ jobs:
         working-directory: backend/
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
         run: |
           heroku container:login
           heroku container:push web -a osint-backend
