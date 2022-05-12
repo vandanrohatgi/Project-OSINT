@@ -3,7 +3,7 @@ import ParticleBackground from "../../components/Login/ParticleBackground";
 import { Form, Button } from "react-bootstrap";
 import styles from "./login.module.css";
 import { MdOutlineSecurity } from "react-icons/md";
-import Input from "../../components/Login/Input";
+import AppInput from "../../components/AppInput/AppInput";
 import { post } from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -38,20 +38,21 @@ function Login() {
       });
   }
   return (
-    <div>
+    <div className={styles.wrapper}>
+      <div className={styles.title}>Project OSINT</div>
       <div className={styles.LoginFormContainer}>
         <div className={styles.AuthIcon}>
           <MdOutlineSecurity />
         </div>
         <Form onSubmit={handleSubmit}>
-          <Input
+          <AppInput
             value={credentials.username}
             onChange={handleChange}
             placeholder={"Enter Username"}
             name="username"
             required
           />
-          <Input
+          <AppInput
             value={credentials.password}
             onChange={handleChange}
             placeholder={"Enter Password"}

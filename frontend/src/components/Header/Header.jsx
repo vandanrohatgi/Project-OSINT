@@ -1,24 +1,3 @@
-// import React from "react";
-// import { useEffect } from "react";
-// import { get } from "../../utils/axios";
-
-// function Header() {
-//   useEffect(() => {
-//     get("/")
-//       .then((data) => {
-//         console.log(data);
-//         alert(JSON.stringify(data));
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         alert(err.message);
-//       });
-//   }, []);
-//   return <h1 className="text-dark text-center">React With Bootstrap</h1>;
-// }
-
-// export default Header;
-
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 const Header = () => {
@@ -29,7 +8,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto"/>
-          <Nav>
+          {/* <Nav>
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
@@ -43,7 +22,7 @@ const Header = () => {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
-          </Nav>
+          </Nav> */}
         </Navbar.Collapse>
       </Container>
     </Navbar>
