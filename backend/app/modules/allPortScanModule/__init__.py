@@ -4,7 +4,7 @@ import threading
 from queue import Queue
 import uuid
 
-class portScanModule:
+class allPortScanModule:
     def __init__(self,uuid,target,db):
         #self.name=name
         self.target=target

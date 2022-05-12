@@ -1,7 +1,7 @@
 import os
 import json
 import pymongo
-
+from bson.objectid import ObjectId
 '''def insert(uuid, name, target, timestamp, module, data, connection):
     cursor = connection.cursor()
     cursor.execute(
@@ -59,9 +59,15 @@ class database:
                     return i['credentials']"""
     def get_results(self,scan_id=None):
         collection=self.db['Scans']
+        formatted_data={}
         if scan_id != None:
-            return collection.find_one({"_id":scan_id})
-        return collection.find()
+            result=collection.find_one({"_id":ObjectId(scan_id)})
+            formatted_data[str(result.pop('_id'))]=result
+            return formatted_data
+        for doc in collection.find():
+            formatted_data[str(doc.pop('_id'))]=doc
+        return formatted_data
+        
 
 '''obj=database()
 

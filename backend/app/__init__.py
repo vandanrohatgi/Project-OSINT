@@ -7,6 +7,7 @@ from flask_jwt_extended import create_access_token,get_jwt,get_jwt_identity,unse
 from flask_cors import CORS,cross_origin
 import uuid
 from app.db import database
+from bson import json_util
 
 def flask_app():
 #app=Flask(__name__,static_url_path='',static_folder='web/static',template_folder='web/templates')
@@ -70,12 +71,16 @@ def flask_app():
         """
         {
             "id":<Scan ID> (Optional),
-            "data":<module name> (Optional)
         }
         """
         id=request.args.get('id',None)
-        data=request.args.get('data',None)
-        past_scan=retrieve(uuid=id,data=data)
+        #data=request.args.get('data',None)
+        past_scan=db.get_results(scan_id=id)
+        #past_scan=retrieve(uuid=id,data=data)
+        #formatted_data=[json.dumps(x, default=json_util.default) for x in past_scan]
+        #formatted_data={}
+        #print(past_scan)
+        #print(formatted_data)
         return jsonify(past_scan)
     return app
 
