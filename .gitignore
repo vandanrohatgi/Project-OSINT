@@ -34,3 +34,4 @@ s3bucketModule/
 past_scans/
 *egg-info/
 *cache*
+request.go#

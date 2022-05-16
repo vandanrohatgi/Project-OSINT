@@ -3,8 +3,9 @@ import requests
 
 #https://search.censys.io/api
 class PublicIPsModule:
-	def __init__(self,uuid,target):
+	def __init__(self,uuid,target,db):
 		self.uuid=uuid
+		self.db=db
 		#self.name=name
 		self.target=target
 		#self.connection=connection
@@ -13,7 +14,7 @@ class PublicIPsModule:
 		self.collectedData={}
 		self.final=[]
 
-	def censys(self,api,secret):
+	'''def censys(self,api,secret):
 		url='https://censys.io/api/v1'
 		query={"query":self.target,'fields':["ip"],}
 
@@ -27,7 +28,7 @@ class PublicIPsModule:
 			for x in result:
 				self.collectedData[x.get('ip'," ")]=" "
 
-		'''filtered=[x.get('ip') for x in result]
+		filtered=[x.get('ip') for x in result]
 			self.collectedData[]
 			self.final+=filtered
 
@@ -53,7 +54,8 @@ class PublicIPsModule:
 			return'''
 		#self.censys(api,secret)
 		self.threatCrowd()
-		with open(f"app/past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
-			json.dump(self.collectedData,f)
+		'''with open(f"app/past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
+			json.dump(self.collectedData,f)'''
+		self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
 		'''byteData=pickle.dumps(self.collectedData)
 		insert(self.uuid,self.name,self.target,self.timestamp,'getPublicIPsModule',byteData,self.connection)'''
