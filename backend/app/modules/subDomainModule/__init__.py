@@ -1,14 +1,10 @@
-import json
 import requests
 
 class subDomainModule:
 	def __init__(self,uuid,target,db):
 		self.uuid=uuid
 		self.db=db
-		#self.name=name
 		self.target=target
-		#self.connection=connection
-		#self.timestamp=timestamp
 		self.collectedData={}
 		
 	
@@ -19,9 +15,4 @@ class subDomainModule:
 
 	def start(self):
 		self.getDomains()
-		'''with open(f"app/past_Scans/{self.uuid}/{self.__class__.__name__}.json","w") as f:
-			json.dump(self.collectedData,f)'''
 		self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
-		'''byteData=pickle.dumps(self.collectedData)
-		insert(self.uuid,self.name,self.target,self.timestamp,'subDomainModule',byteData,self.connection)'''
-
