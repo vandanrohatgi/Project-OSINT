@@ -10,7 +10,7 @@ def flask_app():
     app=Flask(__name__)
     CORS(app=app,supports_credentials=True)
     app.config["JWT_SECRET_KEY"]=str(uuid.uuid1())
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=1)
     db=database()
     jwt=JWTManager(app)
     app.env="development"
