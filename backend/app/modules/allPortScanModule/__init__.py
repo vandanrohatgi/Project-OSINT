@@ -3,13 +3,12 @@ import threading
 from queue import Queue
 
 class allPortScanModule:
-    def __init__(self,uuid,target,db):
+    def __init__(self,target,db):
         self.target=target
-        self.uuid=uuid
         self.lock=threading.Lock()
         self.q=Queue()
         self.collectedData={}
-        self.db=db
+        #self.db=db
 
     def scan(self,port):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -41,7 +40,7 @@ class allPortScanModule:
         for port in range(1,65535):
             self.q.put(port)
         
-        self.q.join()
-        self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
+        return self.collectedData
+		#self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
 
 

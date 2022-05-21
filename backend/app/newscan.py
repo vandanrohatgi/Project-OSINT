@@ -11,14 +11,15 @@ def new(form,db):
     name=form['name']
     target=form['target']
     toImport=form['modules']
-    scan_id=db.put_object({"name":name,"target":target,"date":date,"time":time,"modules":toImport})
+    scan_id=db.put_object({"name":name,"target":target,"date":date,"time":time,"modules":toImport,"result":[]})
 
     for i in toImport:
         module_obj=__import__('app.modules.'+i,globals(),locals(),[i])
-        objects.append(getattr(module_obj,i)(scan_id,target,db))
+        objects.append(getattr(module_obj,i)(target,db))
     
     for i in objects:
-        i.start()
+        result=i.start()
+        db.update_object(scan_id,{"result":{i.__class__.__name__:result}})
     return
 
 

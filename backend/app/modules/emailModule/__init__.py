@@ -1,8 +1,7 @@
 import requests
 
 class emailModule:
-	def __init__(self,uuid,target,db):
-		self.uuid=uuid
+	def __init__(self,target,db):
 		self.target=target
 		self.collectedData={}
 		self.db=db
@@ -16,4 +15,5 @@ class emailModule:
 		apidata=self.get_domain_search()
 		for email in apidata['emails']:
 			self.collectedData[email.get('email')]=""
-		self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
+		return self.collectedData
+		#self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})

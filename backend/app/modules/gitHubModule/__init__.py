@@ -4,8 +4,7 @@ from urllib import parse
 from time import sleep
 
 class gitHubModule:
-	def __init__(self,uuid,target,db):
-		self.uuid=uuid
+	def __init__(self,target,db):
 		self.db=db
 		self.target=target
 		self.collectedData={}
@@ -38,4 +37,5 @@ class gitHubModule:
 				print("Sleeping...")
 				sleep(60)
 				count=0
-		self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
+		return self.collectedData
+		#self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
