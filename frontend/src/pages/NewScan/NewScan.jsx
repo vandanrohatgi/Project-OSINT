@@ -39,7 +39,7 @@ function NewScan() {
   }
   return (
     <div>
-      <Heading title="Start A New Scan" className="text-danger" />
+      <Heading title="Start A New Scan" className="text-primary" />
       <form className="mt-4" onSubmit={handleSubmit}>
         <Row>
           <Col>

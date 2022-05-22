@@ -1,0 +1,20 @@
+.listItem {
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+  cursor: pointer;
+  margin: 20px auto;
+  transition: all 500ms ease;
+  width: 70%;
+}
+
+.listItem:hover {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.link {
+  display: none;
+  color: blue;
+}
+.listItem:hover .link {
+  display: block;
+}
