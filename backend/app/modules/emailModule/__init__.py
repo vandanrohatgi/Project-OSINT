@@ -13,7 +13,10 @@ class emailModule:
 
 	def start(self):
 		apidata=self.get_domain_search()
-		for email in apidata['emails']:
-			self.collectedData[email.get('email')]=""
+		try:
+			for email in apidata['emails']:
+				self.collectedData[email.get('email')]=""
+		except KeyError:
+			pass
 		return self.collectedData
 		#self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
