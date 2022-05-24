@@ -5,6 +5,7 @@ import AppButton from "../../components/AppButton/AppButton";
 import Modules from "../../components/NewScan/Modules";
 import { post } from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
+import Heading from "../../components/Heading/Heading";
 
 function NewScan() {
   const [fields, setFields] = useState({ name: "", target: "" });
@@ -38,9 +39,7 @@ function NewScan() {
   }
   return (
     <div>
-      <h4>
-        <strong>Start A New Scan</strong>
-      </h4>
+      <Heading title="Start A New Scan" className="text-primary" />
       <form className="mt-4" onSubmit={handleSubmit}>
         <Row>
           <Col>

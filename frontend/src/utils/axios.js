@@ -12,9 +12,7 @@ function getHeaders() {
 }
 
 export const get = (path, params = {}) =>
-  axiosInstance.get(BASE_URL + path, params, {
-    params,
-  });
+  axiosInstance.get(BASE_URL + path, { ...params, ...getHeaders() });
 
 export const post = (path, body = {}) =>
   axiosInstance.post(BASE_URL + path, body, getHeaders());
