@@ -1,4 +1,5 @@
 from datetime import datetime
+from threading import Thread
 
 modules=['portScanModule','sslModule','emailModule','subDomainModule','allPortScanModule','PublicIPsModule','gitHubModule']
 
@@ -15,12 +16,15 @@ def new(form,db):
 
     for i in toImport:
         module_obj=__import__('app.modules.'+i,globals(),locals(),[i])
-        objects.append(getattr(module_obj,i)(target,db))
+        objects.append(getattr(module_obj,i)(scan_id,target,db))
     
     for i in objects:
-        result=i.start()
-        db.update_object(scan_id,{"result":{i.__class__.__name__:result}})
-    return
+        task=Thread(target=i.start)
+        task.daemon=True
+        task.start()
+        #result=i.start()
+        #db.update_object(scan_id,{"result":{i.__class__.__name__:result}})
+    return str(scan_id)
 
 
  

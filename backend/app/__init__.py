@@ -53,8 +53,9 @@ def flask_app():
         }
         """
         params=request.json
-        new(params,db)
-        return jsonify({"msg":"Scan Complete!"})
+        scan_id=new(params,db)
+        #return jsonify({"msg":"Scan Complete!"})
+        return jsonify({"scan_id":scan_id})
 
     @app.route('/getScanInfo',methods=['GET'],endpoint='info')
     @jwt_required()

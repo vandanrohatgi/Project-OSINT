@@ -1,8 +1,9 @@
 import requests
 
 class emailModule:
-	def __init__(self,target,db):
+	def __init__(self,scan_id,target,db):
 		self.target=target
+		self.scan_id=scan_id
 		self.collectedData={}
 		self.db=db
 	
@@ -18,5 +19,5 @@ class emailModule:
 				self.collectedData[email.get('email')]=""
 		except KeyError:
 			pass
-		return self.collectedData
-		#self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
+		#return self.collectedData
+		self.db.update_object(self.scan_id,{"result":{self.__class__.__name__:self.collectedData}})
