@@ -20,15 +20,19 @@ function Scans() {
           },
           []
         );
-        console.log({ modifiedResult });
+        // console.log({ modifiedResult });
         setPreviousScans(modifiedResult.reverse());
       })
       .catch(alert);
   }, []);
   return (
     <div>
-      <Heading title="Previous Scans" className="text-success"/>
-      {previousScans && previousScans.map((scan) => <ListItem {...scan} />)}
+      <Heading title="Previous Scans" className="text-success" />
+      {previousScans ? (
+        previousScans.map((scan) => <ListItem {...scan} />)
+      ) : (
+        <div className="text-center text-secondary ">Fetching...</div>
+      )}
     </div>
   );
 }
