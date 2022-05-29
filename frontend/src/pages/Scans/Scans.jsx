@@ -21,7 +21,7 @@ function Scans() {
           []
         );
         console.log({ modifiedResult });
-        setPreviousScans(modifiedResult);
+        setPreviousScans(modifiedResult.reverse());
       })
       .catch(alert);
   }, []);

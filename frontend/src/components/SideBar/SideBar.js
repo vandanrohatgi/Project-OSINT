@@ -9,6 +9,9 @@ import { useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  function handleNavigation(path) {
+    navigate(path);
+  }
   function handleLogout() {
     sessionStorage.removeItem("accessToken");
     navigate(0);
@@ -24,9 +27,19 @@ const Sidebar = () => {
         </CDBSidebarHeader>
         <CDBSidebarContent className="sidebar-content">
           <CDBSidebarMenu>
-            <CDBSidebarMenuItem icon="search">New Scan</CDBSidebarMenuItem>
-            <CDBSidebarMenuItem icon="history">History</CDBSidebarMenuItem>
-            <CDBSidebarMenuItem icon="columns">Overview</CDBSidebarMenuItem>
+            <CDBSidebarMenuItem
+              icon="plus"
+              onClick={() => handleNavigation("/new-scan")}
+            >
+              New Scan
+            </CDBSidebarMenuItem>
+            <CDBSidebarMenuItem
+              icon="history"
+              onClick={() => handleNavigation("/scans")}
+            >
+              History
+            </CDBSidebarMenuItem>
+            {/* <CDBSidebarMenuItem icon="columns">Overview</CDBSidebarMenuItem> */}
             <CDBSidebarMenuItem icon="user" onClick={handleLogout}>
               LogOut
             </CDBSidebarMenuItem>
