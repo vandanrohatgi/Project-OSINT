@@ -64,14 +64,17 @@ function MetaInfomation({ data }) {
         </div>
         <div className="d-flex justify-content-between">
           <div>
-            <GrTarget /> {target}
+            <GrTarget />{" "}
+            <a href={"https:"+target} target="_blank" rel="noreferrer">
+              {target}
+            </a>
           </div>
           <div>{date + " " + time}</div>
         </div>
         <div>Total Modules: {modules.length}</div>
       </div>
       <div className="my-4">
-        <h5>Output:</h5>
+        <h5>Scanned Result:</h5>
         <Row>
           {result.map((module) => (
             <Col sm={6}>
@@ -104,8 +107,8 @@ function Chart({ data }) {
   };
 
   return (
-    <>
-      <h5>Chart</h5>
+    <div className="mt-5">
+      <h5>Analysis</h5>
       {data.result.length !== 0 && (
         <>
           <div key={Math.random()} className={styles.mapContainer}>
@@ -168,7 +171,7 @@ function Chart({ data }) {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
 export default ScanOverview;
