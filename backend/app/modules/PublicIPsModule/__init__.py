@@ -1,13 +1,11 @@
 import requests
 
 class PublicIPsModule:
-	def __init__(self,uuid,target,db):
-		self.uuid=uuid
+	def __init__(self,scan_id,target,db):
 		self.db=db
+		self.scan_id=scan_id
 		self.target=target
-		self.IPs={}
 		self.collectedData={}
-		self.final=[]
 
 	def threatCrowd(self):
 		res=requests.get("http://www.threatcrowd.org/searchApi/v2/domain/report/", {"domain": self.target}).json()["resolutions"]
@@ -16,4 +14,5 @@ class PublicIPsModule:
 
 	def start(self):
 		self.threatCrowd()
-		self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
+		#return self.collectedData
+		self.db.update_object(self.scan_id,{"result":{self.__class__.__name__:self.collectedData}})

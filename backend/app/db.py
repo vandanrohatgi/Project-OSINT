@@ -15,7 +15,7 @@ class database:
     
     def update_object(self,scan_id,update_data):
         collection=self.db['Scans']
-        collection.update_one({"_id":scan_id},{"$set":update_data})
+        collection.update_one({"_id":scan_id},{"$addToSet":update_data})
     
     def get_creds(self):
         collection=self.db['credentials']

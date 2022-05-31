@@ -1,43 +1,67 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { BsGlobe, BsBoxArrowUpRight } from "react-icons/bs";
 import { get } from "../../utils/axios";
-import {Link} from "react-router-dom";
+import styles from "./scan.module.css";
+import { Row, Col } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import Heading from "../../components/Heading/Heading";
 
-const Scans = () => {
-
-  const [mess, setMess] = useState();
-  
-  const data_token = sessionStorage.getItem("accessToken");
-
-  useEffect(()=>{
-    const config = {
-      headers:{
-        Authorization:`Bearer ${data_token}`
-      },
-    }
-    get("/getScanInfo",config)
-    .then((result)=>result.data)
-    .then((data)=>setMess(data))
-    .catch((err)=>console.log(err.message))
-  },[data_token])
-
+function Scans() {
+  const [previousScans, setPreviousScans] = useState();
+  useEffect(() => {
+    get("/getScanInfo")
+      .then((result) => {
+        console.log(result);
+        const modifiedResult = Object.entries(result.data).reduce(
+          (agg, index) => {
+            agg.push({ ...index[1], id: index[0] });
+            return agg;
+          },
+          []
+        );
+        // console.log({ modifiedResult });
+        setPreviousScans(modifiedResult.reverse());
+      })
+      .catch(alert);
+  }, []);
   return (
-    <>
-      {mess ? (
-      <>
-        {Object.entries(mess)?.map((data)=>(
-          data[1].result.length !== 0 && (
-            <>
-                  <p>{data[1].date} {data[1].target}</p>
-                  <Link to={`/scans/${data[0]}`}>Visit</Link>
-                </>
-            )
-        ))}
-      </>
-    ):(
-      <p>Loading...</p>
-    )}
-    </>
-  )
+    <div>
+      <Heading title="Previous Scans" className="text-success" />
+      {previousScans ? (
+        previousScans.map((scan) => <ListItem {...scan} />)
+      ) : (
+        <div className="text-center text-secondary ">Fetching...</div>
+      )}
+    </div>
+  );
 }
 
-export default Scans
+function ListItem(props) {
+  const navigate = useNavigate();
+  const { id, name, target, modules, date } = props;
+  return (
+    <Row className={styles.listItem} onClick={() => navigate(id)}>
+      <Col sm="10">
+        <Row>
+          <Col>
+            <div>
+              <strong>{name.toString().toUpperCase()}</strong>
+            </div>
+            <div>{new Date(date).toString()?.slice(0, 16)}</div>
+          </Col>
+          <Col className="text-end">
+            <div>
+              <BsGlobe /> {target}
+            </div>
+            <div>{modules.length} module/s</div>
+          </Col>
+        </Row>
+      </Col>
+      <Col sm="2" className={styles.link}>
+        <BsBoxArrowUpRight />
+      </Col>
+    </Row>
+  );
+}
+export default Scans;

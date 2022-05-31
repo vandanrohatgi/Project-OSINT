@@ -4,9 +4,9 @@ from urllib import parse
 from time import sleep
 
 class gitHubModule:
-	def __init__(self,uuid,target,db):
-		self.uuid=uuid
+	def __init__(self,scan_id,target,db):
 		self.db=db
+		self.scan_id=scan_id
 		self.target=target
 		self.collectedData={}
 		self.url='https://api.github.com/search/code?q='
@@ -38,4 +38,5 @@ class gitHubModule:
 				print("Sleeping...")
 				sleep(60)
 				count=0
-		self.db.update_object(self.uuid,{self.__class__.__name__:self.collectedData})
+		#return self.collectedData
+		self.db.update_object(self.scan_id,{"result":{self.__class__.__name__:self.collectedData}})
