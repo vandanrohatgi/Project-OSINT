@@ -37,6 +37,7 @@ function NewScan() {
         alert(err.message);
       });
   }
+
   return (
     <div>
       <Heading title="Start A New Scan" className="text-primary" />

@@ -1,7 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import Dashboard from "./pages/Dashboard/Dashboard";
 import NewScan from "./pages/NewScan/NewScan";
 import Layout from "./components/Layout/Layout";
 import SuccessMessage from "./components/NewScan/SuccessMessage";
