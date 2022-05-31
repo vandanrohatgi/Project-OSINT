@@ -36,6 +36,7 @@ function NewScan() {
         alert(err.message);
       });
   }
+
   return (
     <div>
       <h4>

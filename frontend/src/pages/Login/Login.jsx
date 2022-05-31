@@ -37,6 +37,8 @@ function Login() {
         setIsSubmitting(false);
       });
   }
+
+  console.log(credentials);
   return (
     <div className={styles.wrapper}>
       <div className={styles.title}>Project OSINT</div>
