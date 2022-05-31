@@ -1,11 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { get } from "../../utils/axios";
-import { Bar, Polar, Doughnut } from "react-chartjs-2";
+import { Polar, Doughnut } from "react-chartjs-2";
 import styles from "./ScanOverview.module.css";
 import { useParams } from "react-router-dom";
 import { GrTarget } from "react-icons/gr";
 import { GoPrimitiveDot } from "react-icons/go";
+import { Row, Col } from "react-bootstrap";
 
 function ScanOverview() {
   const [scanData, setScanData] = useState();
@@ -21,7 +22,7 @@ function ScanOverview() {
   }
   useEffect(() => {
     fetchScanInfo();
-    const INTERVAL = 10 * 1000; //10 seconds
+    const INTERVAL = 1000 * 1000; //10 seconds
     const interval = setInterval(fetchScanInfo, INTERVAL);
 
     return () => {
@@ -30,7 +31,7 @@ function ScanOverview() {
     };
   }, []);
   return (
-    <div>
+    <div className="p-3">
       {scanData ? (
         <>
           <MetaInfomation data={scanData} />
@@ -48,40 +49,50 @@ function MetaInfomation({ data }) {
   const isComplete = modules.length == result.length;
 
   return (
-    <div className="p-3">
-      <div className="d-flex justify-content-between">
-        <h2>{name.toString().toUpperCase()}</h2>
-        <div className={!isComplete ? "text-warning" : "text-success"}>
-          <strong>
-            <GoPrimitiveDot />
-            {isComplete ? "Completed" : "Pending"}
-          </strong>
+    <>
+      <div className={styles.boxShadowInfo}>
+        <div className="d-flex justify-content-between">
+          <h2>
+            <strong>{name.toString().toUpperCase()}</strong>
+          </h2>
+          <div className={!isComplete ? "text-warning" : "text-success"}>
+            <strong>
+              <GoPrimitiveDot />
+              {isComplete ? "Completed" : "Pending"}
+            </strong>
+          </div>
         </div>
-      </div>
-      <div className="d-flex justify-content-between">
-        <div>
-          <GrTarget /> {target}
+        <div className="d-flex justify-content-between">
+          <div>
+            <GrTarget /> {target}
+          </div>
+          <div>{date + " " + time}</div>
         </div>
-        <div>{date + " " + time}</div>
+        <div>Total Modules: {modules.length}</div>
       </div>
-      <div>
-        {result.map((module) => (
-          <p>
-            {Object.entries(module).map(([name, res]) => (
-              <>
-                {name}
-                {JSON.stringify(Object.keys(res).length)}
-              </>
-            ))}
-          </p>
-        ))}
+      <div className="my-4">
+        <h5>Output:</h5>
+        <Row>
+          {result.map((module) => (
+            <Col sm={6}>
+              {Object.entries(module).map(([name, res]) => (
+                <>
+                  {" "}
+                  {name} : {JSON.stringify(Object.keys(res).length)}
+                </>
+              ))}
+            </Col>
+          ))}
+        </Row>
       </div>
-    </div>
+    </>
   );
 }
 
 function Chart({ data }) {
   const doughOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
     legend: {
       position: "right",
     },
@@ -94,10 +105,11 @@ function Chart({ data }) {
 
   return (
     <>
+      <h5>Chart</h5>
       {data.result.length !== 0 && (
         <>
           <div key={Math.random()} className={styles.mapContainer}>
-            <div className={styles.map}>
+            {/* <div className={styles.map}>
               <p>
                 {data.name} {data.target}
               </p>
@@ -125,11 +137,8 @@ function Chart({ data }) {
                   ],
                 }}
               />
-            </div>
-            <div className={styles.map}>
-              <p>
-                {data.name} {data.target}
-              </p>
+            </div> */}
+            <div className={"d-flex justify-content-center"}>
               <Doughnut
                 options={doughOptions}
                 data={{
@@ -156,14 +165,6 @@ function Chart({ data }) {
                 }}
               />
             </div>
-            {console.log(
-              Object.entries(data.result).map(
-                (item) => Object.entries(item[1])[0][0]
-              ),
-              Object.entries(data.result).map(
-                (item) => Object.keys(Object.entries(item[1])[0][1]).length
-              )
-            )}
           </div>
         </>
       )}
