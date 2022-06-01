@@ -63,9 +63,13 @@ def flask_app():
         """
         {
             "id":<Scan ID> (Optional),
+            "limit":<integer> (Optional, default=all),
+            "meta": <bool> (Optional, default=False)
         }
         """
         id=request.args.get('id',None)
-        past_scan=db.get_results(scan_id=id)
+        limit=int(request.args.get('limit',0))
+        meta=bool(request.args.get('meta',False))
+        past_scan=db.get_results(scan_id=id,limit=limit,meta=meta)
         return jsonify(past_scan)
     return app
