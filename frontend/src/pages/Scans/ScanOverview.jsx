@@ -65,7 +65,7 @@ function MetaInfomation({ data }) {
         <div className="d-flex justify-content-between">
           <div>
             <GrTarget />{" "}
-            <a href={"https:"+target} target="_blank" rel="noreferrer">
+            <a href={"https:" + target} target="_blank" rel="noreferrer">
               {target}
             </a>
           </div>
@@ -94,8 +94,8 @@ function MetaInfomation({ data }) {
 
 function Chart({ data }) {
   const doughOptions = {
-    maintainAspectRatio: false,
-    responsive: true,
+    // maintainAspectRatio: false,
+    // responsive: true,
     legend: {
       position: "right",
     },
@@ -143,6 +143,8 @@ function Chart({ data }) {
             </div> */}
             <div className={"d-flex justify-content-center"}>
               <Doughnut
+                // width={"30%"}
+                height={"70px"}
                 options={doughOptions}
                 data={{
                   labels: Object.entries(data.result).map(
