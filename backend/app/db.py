@@ -29,10 +29,10 @@ class database:
             formatted_data[str(result.pop('_id'))]=result
             return formatted_data
         if meta:
-            for doc in collection.find().limit(limit):
+            for doc in collection.find().sort('_id',pymongo.DESCENDING).limit(limit):
                 doc.pop('result')
                 formatted_data[str(doc.pop('_id'))]=doc
             return formatted_data
-        for doc in collection.find().limit(limit):
+        for doc in collection.find().sort('_id',pymongo.DESCENDING).limit(limit):
             formatted_data[str(doc.pop('_id'))]=doc
         return formatted_data
