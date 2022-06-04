@@ -16,17 +16,15 @@ function ScanOverview() {
       .then((result) => {
         console.log(result.data);
         setScanData(result.data[id]);
-        // setScanData(result.data);
       })
       .catch(alert);
   }
   useEffect(() => {
     fetchScanInfo();
-    const INTERVAL = 1000 * 1000; //10 seconds
+    const INTERVAL = 10 * 1000; //10 seconds
     const interval = setInterval(fetchScanInfo, INTERVAL);
 
     return () => {
-      console.log("cleaing");
       clearInterval(interval);
     };
   }, []);
@@ -86,9 +84,10 @@ function MetaInfomation({ data }) {
                       {name} : {JSON.stringify(Object.keys(res).length)}
                     </strong>
                     <div className={styles.moduleResult}>
-                      {Object.keys(res).map((item) => (
+                      {Object.entries(res).map(([key, value]) => (
                         <div className="rounded p-1 m-1 border d-inline-block">
-                          {item}
+                          {key}
+                          {value && " : " + JSON.stringify(value, null, 2)}
                         </div>
                       ))}
                     </div>
@@ -103,10 +102,11 @@ function MetaInfomation({ data }) {
   );
 }
 
-function Chart({ data }) {
+function arePropsSame(prevProps, newProps) {
+  return prevProps.data.result.length === newProps.data.result.length;
+}
+const Chart = React.memo(({ data }) => {
   const doughOptions = {
-    // maintainAspectRatio: false,
-    // responsive: true,
     legend: {
       position: "right",
     },
@@ -125,7 +125,6 @@ function Chart({ data }) {
           <div key={Math.random()} className={styles.mapContainer}>
             <div className={"d-flex justify-content-center"}>
               <Doughnut
-                // width={"30%"}
                 height={"70px"}
                 options={doughOptions}
                 data={{
@@ -157,5 +156,6 @@ function Chart({ data }) {
       )}
     </div>
   );
-}
+}, arePropsSame);
+
 export default ScanOverview;

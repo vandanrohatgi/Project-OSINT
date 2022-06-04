@@ -18,7 +18,7 @@ const Sidebar = () => {
   }
   return (
     <div style={{ display: "flex" }}>
-      <CDBSidebar textColor="#000000" backgroundColor="#f8f8f8">
+      <CDBSidebar textColor="#000000" backgroundColor="#f8f8f8" className="w-100">
         <CDBSidebarHeader
           prefix={<i className="fa fa-bars fa-large"></i>}
           style={{ height: "55px" }}

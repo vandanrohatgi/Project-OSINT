@@ -3,6 +3,13 @@
   height: 100vh;
   display: flex;
 }
+
+.sidebar {
+  padding-right: 0px;
+}
+.contentWrapper {
+  padding-left: 0px;
+}
 .contentWrapper {
   flex: 1;
 }
