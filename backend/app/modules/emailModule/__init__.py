@@ -17,7 +17,7 @@ class emailModule:
 		try:
 			for email in apidata['emails']:
 				self.collectedData[email.get('email')]=""
-		except KeyError:
+		except:
 			pass
 		#return self.collectedData
 		self.db.update_object(self.scan_id,{"result":{self.__class__.__name__:self.collectedData}})

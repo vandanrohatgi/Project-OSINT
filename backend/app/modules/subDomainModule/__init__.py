@@ -9,9 +9,12 @@ class subDomainModule:
 		
 	
 	def getDomains(self):
-		res=requests.get("http://www.threatcrowd.org/searchApi/v2/domain/report/", {"domain": self.target}).json()["subdomains"]
-		for x in res:
-			self.collectedData[x]=""
+		res=requests.get("http://www.threatcrowd.org/searchApi/v2/domain/report/", {"domain": self.target}).json()
+		try:
+			for x in res["subdomains"]:
+				self.collectedData[x]=""
+		except:
+			pass
 
 	def start(self):
 		self.getDomains()
