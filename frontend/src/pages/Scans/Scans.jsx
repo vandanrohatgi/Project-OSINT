@@ -10,7 +10,7 @@ import Heading from "../../components/Heading/Heading";
 function Scans() {
   const [previousScans, setPreviousScans] = useState();
   useEffect(() => {
-    get("/getScanInfo")
+    get("/getScanInfo?meta=true")
       .then((result) => {
         console.log(result);
         const modifiedResult = Object.entries(result.data).reduce(

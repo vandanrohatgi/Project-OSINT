@@ -81,7 +81,18 @@ function MetaInfomation({ data }) {
               {Object.entries(module).map(([name, res]) => (
                 <>
                   {" "}
-                  {name} : {JSON.stringify(Object.keys(res).length)}
+                  <div className={styles.moduleCard}>
+                    <strong>
+                      {name} : {JSON.stringify(Object.keys(res).length)}
+                    </strong>
+                    <div className={styles.moduleResult}>
+                      {Object.keys(res).map((item) => (
+                        <div className="rounded p-1 m-1 border d-inline-block">
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </>
               ))}
             </Col>
@@ -112,35 +123,6 @@ function Chart({ data }) {
       {data.result.length !== 0 && (
         <>
           <div key={Math.random()} className={styles.mapContainer}>
-            {/* <div className={styles.map}>
-              <p>
-                {data.name} {data.target}
-              </p>
-              <Polar
-                data={{
-                  labels: Object.entries(data.result).map(
-                    (item) => Object.entries(item[1])[0][0]
-                  ),
-                  datasets: [
-                    {
-                      data: Object.entries(data.result).map(
-                        (item) =>
-                          Object.keys(Object.entries(item[1])[0][1]).length
-                      ),
-                      backgroundColor: [
-                        "rgb(255, 99, 132)",
-                        "rgb(75, 192, 192)",
-                        "rgb(255, 205, 86)",
-                        "rgb(201, 203, 207)",
-                        "rgb(54, 162, 235)",
-                        "purple",
-                        "yellow",
-                      ],
-                    },
-                  ],
-                }}
-              />
-            </div> */}
             <div className={"d-flex justify-content-center"}>
               <Doughnut
                 // width={"30%"}
