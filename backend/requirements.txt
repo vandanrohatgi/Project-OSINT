@@ -18,7 +18,7 @@ pluggy==1.0.0
 py==1.11.0
 PyJWT==2.3.0
 pymongo==4.1.1
-pyparsing==3.0.8
+pyparsing==3.0.9
 pytest==7.1.1
 pytest-flask==1.2.0
 requests==2.27.1
